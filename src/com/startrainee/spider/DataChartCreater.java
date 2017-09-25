@@ -15,24 +15,24 @@ public class DataChartCreater {
 
     public static void createNewsChart(String filePath){
         List<News> news = readNewsFile(filePath);
-        HashMap<LocalDate,Integer> dateRange = getNewsHashMap(news);
+        HashMap<String,Integer> dateRange = getNewsHashMap(news);
         createChart(dateRange);
 
     }
 
-    private static void createChart(HashMap<LocalDate, Integer> dateRange) {
+    private static void createChart(HashMap<String, Integer> dateRange) {
         DefaultCategoryDataset dataSet = new DefaultCategoryDataset();
 
-        Set<LocalDate> keySet = dateRange.keySet();
-        List<LocalDate> keyList = new ArrayList<>(keySet);
+        Set<String> keySet = dateRange.keySet();
+        List<String> keyList = new ArrayList<>(keySet);
         Collections.sort(keyList);
 
-        for(LocalDate str : keyList){
+        for(String str : keyList){
             dataSet.addValue(dateRange.get(str), str, str);
             System.out.println(str + "$" + dateRange.get(str));
         }
 
-        JFreeChart barChart = ChartFactory.createLineChart(
+        JFreeChart barChart = ChartFactory.createBarChart3D(
                 "Neusoft News Counts",
                 "Datas",
                 "Numbers",
@@ -50,17 +50,19 @@ public class DataChartCreater {
         }
     }
 
-    private static HashMap<LocalDate,Integer> getNewsHashMap(List<News> news) {
-        HashMap<LocalDate,Integer> dateRange = new HashMap<>();
+    private static HashMap<String,Integer> getNewsHashMap(List<News> news) {
+        //HashMap<LocalDate,Integer> dateRange = new HashMap<>();
+        HashMap<String,Integer> dateRange = new HashMap<>();
         for(News newsTemp : news){
             LocalDate date = changeToLocalDate(newsTemp.getDate());
+            String yearStr = String.valueOf(date.getYear());
             Integer newInt = 0;
-            if(dateRange.keySet().contains(date)){
-                newInt = dateRange.get(date) + 1;
+            if(dateRange.keySet().contains(yearStr)){
+                newInt = dateRange.get(yearStr) + 1;
             }else{
                 newInt++;
             }
-            dateRange.put(date,newInt);
+            dateRange.put(yearStr,newInt);
         }
         return dateRange;
     }
