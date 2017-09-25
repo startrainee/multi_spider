@@ -52,15 +52,22 @@ public class HTMLParser {
 
     public String getAreaString(String HTMLdata, String startStr, String endStr) {
 
-        String areaStringOfsubStart = HTMLdata.substring(HTMLdata.indexOf(startStr));
-
-        return areaStringOfsubStart.substring(0, areaStringOfsubStart.indexOf(endStr));
+        //String areaStringOfsubStart = HTMLdata.substring(HTMLdata.indexOf(startStr));
+        //String regex = startStr +".+"+endStr;
+        String regex = Pattern.quote(startStr) + "(.*?)" + Pattern.quote(endStr);
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(HTMLdata);
+        if (matcher.find()) {
+            return matcher.group();
+        }
+        return "";
+        //return areaStringOfsubStart.substring(0, areaStringOfsubStart.indexOf(endStr));
     }
 
 /*    public static void main(String[] args) {
-        List<String> list = new HTMLParser().getDatas(new URLsDownloader().downLoaderURL("http://www.neusoft.com/cn/news/index.jsp?type=39"));
-        list.forEach(s-> System.out.println(Arrays.toString(s.trim().split("[|]+"))));
-        //list.forEach(System.out::println);
+        List<String> list = new HTMLParser().getNewURLs(new URLsDownloader().downLoaderURL("http://www.neusoft.com/cn/news/index.jsp?type=39"));
+        //list.forEach(s-> System.out.println(Arrays.toString(s.trim().split("[|]+"))));
+        list.forEach(System.out::println);
     }*/
 
 

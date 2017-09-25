@@ -26,6 +26,13 @@ public class Spider implements Runnable {
 
         int threadCount = 0;
         while (threadCount < 5) {
+            if(threadCount!=1){
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
             threadCount++;
             new Thread(this).start();
         }
@@ -36,13 +43,23 @@ public class Spider implements Runnable {
 
     @Override
     public void run() {
-
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         while(!urLsManager.isEmpty()){
+            System.out.println("currentThread : " + Thread.currentThread().getName());
             String URL = urLsManager.getNewUrl();
-            String htmlData = urLsDownloader.downLoaderURL(rootURL);
-            System.out.println(htmlData);
+            if(URL == null){
+                System.out.println("urLsManager.getNewUrl()");
+                break;
+            }
+            urLsManager.addHadGetVector(URL);
+            String htmlData = urLsDownloader.downLoaderURL(URL);
             List<String> newUrls = htmlParser.getNewURLs(htmlData);
             urLsManager.addURLs(newUrls);
+            newUrls.forEach(System.out::println);
             List<String> parsedData = htmlParser.getDatas(htmlData);
             htmlOutputer.outPut(parsedData);
         }
@@ -50,6 +67,7 @@ public class Spider implements Runnable {
 
     public static void main(String[] args) {
         String rootUrl = "http://www.neusoft.com/cn/news/index.jsp?type=39";
+        rootUrl = "http://www.neusoft.com/cn/news/index.jsp?CurrentPage=0&type=39&keywords=&srchfield=0&startdate=&enddate=";
         new Spider(rootUrl).start();
     }
 }
