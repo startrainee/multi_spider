@@ -1,9 +1,6 @@
 package com.startrainee.spider;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.util.List;
 
 public class HTMLOutputer {
@@ -44,11 +41,10 @@ public class HTMLOutputer {
                         bufferedWriter.write(s);
                         bufferedWriter.write("\n");
                     } catch (IOException e) {
-                        System.err.println("this is error in writeIntoFile bufferedWriter.write(s)");
                         e.printStackTrace();
                     }
                 });
-                bufferedWriter.close();
+            bufferedWriter.close();
 
         } catch (IOException e) {
             e.printStackTrace();
