@@ -32,7 +32,7 @@ public class DataChartCreater {
             System.out.println(str + "$" + dateRange.get(str));
         }
 
-        JFreeChart barChart = ChartFactory.createBarChart3D(
+        JFreeChart barChart = ChartFactory.createLineChart(
                 "Neusoft News Counts",
                 "Datas",
                 "Numbers",
