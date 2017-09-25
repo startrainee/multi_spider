@@ -11,6 +11,7 @@ public class Spider implements Runnable {
     private URLsManager urLsManager = new URLsManager();
     private HTMLOutputer htmlOutputer = new HTMLOutputer();
     private String rootURL;
+    private static int threadCount = 0;
 
     public Spider(String rootURL) {
         htmlParser = new HTMLParser();
@@ -43,6 +44,7 @@ public class Spider implements Runnable {
 
     @Override
     public void run() {
+        threadCount++;
         try {
             Thread.sleep(1000);
         } catch (InterruptedException e) {
@@ -63,11 +65,13 @@ public class Spider implements Runnable {
             List<String> parsedData = htmlParser.getDatas(htmlData);
             htmlOutputer.outPut(parsedData);
         }
+        threadCount--;
     }
 
     public static void main(String[] args) {
         String rootUrl = "http://www.neusoft.com/cn/news/index.jsp?type=39";
         rootUrl = "http://www.neusoft.com/cn/news/index.jsp?CurrentPage=0&type=39&keywords=&srchfield=0&startdate=&enddate=";
         new Spider(rootUrl).start();
+
     }
 }
