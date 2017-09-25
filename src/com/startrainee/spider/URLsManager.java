@@ -13,7 +13,7 @@ public class URLsManager {
         return urls.poll();
     }
 
-    private synchronized boolean addURL(String url){
+    public synchronized boolean addURL(String url){
 
         if(urls.remainingCapacity() <= 0){
             LinkedBlockingQueue<String> newUrls = new LinkedBlockingQueue<>(urls.size()+ EXPAND_SIZE);
@@ -26,5 +26,9 @@ public class URLsManager {
 
     public synchronized void addURLs(List<String> urlList){
         urlList.forEach(this::addURL);
+    }
+
+    public boolean isEmpty(){
+        return urls.isEmpty();
     }
 }
