@@ -1,19 +1,57 @@
 package com.startrainee.spider;
 
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.List;
 
 public class HTMLOutputer {
     private static int fileCount = 0;
-    private static String baseFileName = "spider_data_";
+
     public void outPut(List<String> parseredData) {
+            File file = createFile();
+            writeIntoFile(file, parseredData);
+    }
+
+    private File createFile() {
+
+        String baseFileName = "spider_data_";
         String fileName = baseFileName + fileCount +".txt";
         File file = new File(fileName);
-        while (file.exists()){
+        while (!file.exists()){
             fileCount++;
-            fileName = baseFileName + fileCount;
+            fileName = baseFileName + fileCount + ".txt";
             file = new File(fileName);
+            try {
+                file.createNewFile();
+                BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(file));
+                bufferedWriter.write("");
+                bufferedWriter.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
-        file.mkdirs();
+        System.out.println("$ file : " + fileName + " is exists.");
+        return file;
+    }
+
+    private void writeIntoFile(File file, List<String> parseredData) {
+        try {
+            BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(file,true));
+                parseredData.forEach(s -> {
+                    try {
+                        bufferedWriter.write(s);
+                        bufferedWriter.write("\n");
+                    } catch (IOException e) {
+                        System.err.println("this is error in writeIntoFile bufferedWriter.write(s)");
+                        e.printStackTrace();
+                    }
+                });
+                bufferedWriter.close();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

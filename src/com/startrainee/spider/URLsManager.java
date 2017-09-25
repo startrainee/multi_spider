@@ -14,7 +14,9 @@ public class URLsManager {
     }
 
     public synchronized boolean addURL(String url){
-
+        if(urls.contains(url)){
+            return false;
+        }
         if(urls.remainingCapacity() <= 0){
             LinkedBlockingQueue<String> newUrls = new LinkedBlockingQueue<>(urls.size()+ EXPAND_SIZE);
             newUrls.addAll(urls);

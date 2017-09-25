@@ -46,7 +46,10 @@ public class Spider implements Runnable {
             List<String> parsedData = htmlParser.getDatas(htmlData);
             htmlOutputer.outPut(parsedData);
         }
+    }
 
-
+    public static void main(String[] args) {
+        String rootUrl = "http://www.neusoft.com/cn/news/index.jsp?type=39";
+        new Spider(rootUrl).start();
     }
 }

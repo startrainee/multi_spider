@@ -12,7 +12,7 @@ public class URLsDownloader {
 
         StringBuilder stringBuilder = new StringBuilder();
         try {
-            URL mURL = new URL("http://www.baidu.com");
+            URL mURL = new URL(url);
             URLConnection urlCon = mURL.openConnection();
             BufferedReader br = new BufferedReader(new InputStreamReader(urlCon.getInputStream()));
             while (br.ready()){
