@@ -12,7 +12,7 @@ import java.util.regex.Pattern;
 public class Main {
 
     public static void main(String[] args) throws IOException {
-        System.out.println("Hello World!");
+        /*System.out.println("Hello World!");
         LinkedBlockingQueue<String> urls = new LinkedBlockingQueue<>(5);
         LinkedBlockingQueue<String> urls2 = new LinkedBlockingQueue<>(10);
         urls.add("1");
@@ -46,7 +46,7 @@ public class Main {
         while (matcher.find()) {
             System.out.println("match.group(): "+matcher.group());
             System.out.println();
-        }
+        }*/
 
 
     }
