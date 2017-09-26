@@ -34,7 +34,6 @@ public class HTMLParser {
         Matcher matcher = pattern.matcher(HTMLdata);
         while (matcher.find()) {
             String dataTemp = matcher.group();
-            System.out.println(dataTemp);
             dataTemp = dataTemp.trim()
                     .replaceAll("<a\\shref=\"","|")
                     .replaceAll("\">\\s<b>","|")
@@ -59,6 +58,7 @@ public class HTMLParser {
         Matcher matcher = pattern.matcher(HTMLdata);
         if (matcher.find()) {
             return matcher.group();
+
         }
         return "";
         //return areaStringOfsubStart.substring(0, areaStringOfsubStart.indexOf(endStr));

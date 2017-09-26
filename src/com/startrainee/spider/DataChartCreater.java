@@ -51,7 +51,6 @@ public class DataChartCreater {
     }
 
     private static HashMap<String,Integer> getNewsHashMap(List<News> news) {
-        //HashMap<LocalDate,Integer> dateRange = new HashMap<>();
         HashMap<String,Integer> dateRange = new HashMap<>();
         for(News newsTemp : news){
             LocalDate date = changeToLocalDate(newsTemp.getDate());
@@ -96,11 +95,6 @@ public class DataChartCreater {
 
     }
 
-
-    public static void main(String[] args) throws IOException {
-        createNewsChart("spider_data_1.txt");
-
-
   /*  DefaultCategoryDataset dataset = new DefaultCategoryDataset();
 
         //dataset.addValue(200, fait, speed);
@@ -119,5 +113,4 @@ public class DataChartCreater {
     int height = 480; *//* Height of the image *//*
     File barChart3D = new File("barChart3D.jpeg");
         ChartUtilities.saveChartAsJPEG(barChart3D, barChart, width, height);*/
-    }
 }

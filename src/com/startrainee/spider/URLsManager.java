@@ -1,21 +1,31 @@
 package com.startrainee.spider;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
 import java.util.concurrent.LinkedBlockingQueue;
 
 public class URLsManager {
 
-    private final static  int EXPAND_SIZE = 500;
-    private LinkedBlockingQueue<String> urls = new LinkedBlockingQueue<>(500);
+    private final static  int EXPAND_SIZE = 1000;
+    private LinkedBlockingQueue<String> urls = new LinkedBlockingQueue<>(1000);
     private Vector<String> hadGetRULs = new Vector<>();
+
+
+    public Vector<String> getHadGetRULs() {
+        return hadGetRULs;
+    }
 
 
     public synchronized String getNewUrl(){
         String newURL = urls.poll();
-        while(hadGetRULs.contains(newURL) && !urls.isEmpty()){
+        while(hadGetRULs.contains(newURL)){
+            if(!urls.isEmpty()){
+                return null;
+            }
             newURL = urls.poll();
+        }
+        if(newURL != null){
+            addHadGetVector(newURL);
         }
         return newURL;
     }
@@ -25,7 +35,7 @@ public class URLsManager {
             return false;
         }
         if(urls.remainingCapacity() <= 0){
-            LinkedBlockingQueue<String> newUrls = new LinkedBlockingQueue<>(urls.size()+ EXPAND_SIZE);
+            LinkedBlockingQueue<String> newUrls = new LinkedBlockingQueue<>(urls.size() + EXPAND_SIZE);
             newUrls.addAll(urls);
             urls = newUrls;
         }
@@ -40,7 +50,7 @@ public class URLsManager {
     public boolean isEmpty(){
         return urls.isEmpty();
     }
-    public void addHadGetVector(String url){
+    public synchronized void addHadGetVector(String url){
         if(!hadGetRULs.contains(url)){
             hadGetRULs.add(url);
         }

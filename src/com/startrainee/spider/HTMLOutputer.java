@@ -6,7 +6,7 @@ import java.util.List;
 public class HTMLOutputer {
     private static int fileCount = 0;
 
-    public void outPut(List<String> parseredData) {
+    public  void outPut(List<String> parseredData) {
             File file = createFile();
             writeIntoFile(file, parseredData);
     }
@@ -44,6 +44,7 @@ public class HTMLOutputer {
                         e.printStackTrace();
                     }
                 });
+            bufferedWriter.flush();
             bufferedWriter.close();
 
         } catch (IOException e) {
