@@ -42,7 +42,7 @@ public class DataChartCreater {
 
         int width = 640; /* Width of the image */
         int height = 480; /* Height of the image */
-        File barChart3D = new File("barChart3D1.jpeg");
+        File barChart3D = new File("barChart3D.jpeg");
         try {
             ChartUtilities.saveChartAsJPEG(barChart3D, barChart, width, height);
         } catch (IOException e) {
